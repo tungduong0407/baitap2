@@ -1,98 +1,103 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function App() {
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <SafeAreaView style={styles.container}>
+      <View style={styles.cardContainer}>
+        {/* Ô 1 */}
+        <View style={[styles.box, styles.box1]}>
+          <Text style={styles.text}>1</Text>
+        </View>
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+        {/* Ô 2 */}
+        <View style={[styles.box, styles.box2]}>
+          <Text style={styles.text}>2</Text>
+        </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+        {/* Hàng chứa Ô 3, Ô 4, Ô 5 nằm ngang */}
+        <View style={styles.row}>
+          <View style={[styles.boxSmall, styles.box3]}><Text style={styles.text}>3</Text></View>
+          <View style={[styles.boxSmall, styles.box4]}><Text style={styles.text}>4</Text></View>
+          <View style={[styles.boxSmall, styles.box5]}><Text style={styles.text}>5</Text></View>
+        </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        {/* Ô 6 */}
+        <View style={[styles.box, styles.box6]}>
+          <Text style={styles.text}>6</Text>
+        </View>
+      </View>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      {/* Thông tin họ tên ở dưới */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Vũ Tùng Dương BIT242338</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  cardContainer: {
+    marginTop: 20,
+  },
+  box: {
+    height: 80,
     justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    borderRadius: 4,
+  },
+  boxSmall: {
+    flex: 1,
+    height: 110,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+  },
+  row: {
     flexDirection: 'row',
+    marginBottom: 10,
+    justifyContent: 'space-between',
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
+  text: {
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  box1: {
+    backgroundColor: '#1E88E5', // Xanh dương
+  },
+  box2: {
+    backgroundColor: '#E53935', // Đỏ
+  },
+  box3: {
+    backgroundColor: '#FFB300', // Vàng
+    marginRight: 6,
+  },
+  box4: {
+    backgroundColor: '#2E7D32', // Xanh lá
+    marginHorizontal: 3,
+  },
+  box5: {
+    backgroundColor: '#7B1FA2', // Tím
+    marginLeft: 6,
+  },
+  box6: {
+    backgroundColor: '#F57C00', // Cam
+    height: 100,
+  },
+  footer: {
     alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    marginBottom: 20,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  footerText: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
   },
 });
